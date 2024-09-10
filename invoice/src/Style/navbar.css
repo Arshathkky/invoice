@@ -1,0 +1,11 @@
+.navbar{
+    width: 200px;
+    padding:0 10px;
+    display: flex;
+    flex-direction: column;
+    background-color:rgba(239, 229, 216, 0.953);
+    height: 100vh;
+    justify-content: space-around;
+    
+    
+}
