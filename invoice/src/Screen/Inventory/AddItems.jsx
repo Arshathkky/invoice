@@ -20,7 +20,7 @@ const AddItems = () => {
     }
 
     try{
-        const response = await axios.post('http://localhost:3000/additem/',itemsData);
+        const response = await axios.post('http://localhost:3000/items/',itemsData);
         alert("success")
         console.log('Item added successfully',response.data);
     }

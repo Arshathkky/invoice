@@ -24,7 +24,18 @@ const postItems = async (req,res) => {
 
 }
 
+const getItems =async (req,res) =>{
+    try {
+        const items = await addItems.find();
+        res.status(200).json(items);
+        }
+    catch(err){
+        console.error(err)
+    }
+}
+
 
 module.exports={
-    postItems
+    postItems,
+    getItems
 }

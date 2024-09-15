@@ -1,7 +1,7 @@
 const User = require('../Model/UserModel')
 
 const getUser = async (req, res) => {
-    console.log(req.body); // Log request body to check if it's being parsed correctly
+    console.log(req.body);
     const { username, password } = req.body;
     try {
       const user = await User.findOne({ username, password });

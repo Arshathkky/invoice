@@ -1,17 +1,17 @@
 import React from 'react'
 
-const Header = () => {
+const Header = ({invoiceId}) => {
 
     const  today = new Date();
   return (
     <div>
       Header
       <br/>
-      <label>Customer name </label>
+      Customer name:
       <input className='' type='text' name='customer' />
       {today.toLocaleDateString()}
       <br/>
-      invoice id = 01
+      invoice id ={invoiceId}
     </div>
   )
 }
