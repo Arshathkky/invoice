@@ -20,6 +20,7 @@ const AddBills = () => {
 
 
   const [customerName ,setCustomerName] =useState('')
+  const [no,setNo]= useState('1');
   const [invoiceId,setInvoiceId] = useState('')
   const [quantity, setQuantity] = useState(0);
   const [unitPrice, setUnitPrice] = useState(0);
@@ -32,18 +33,20 @@ const AddBills = () => {
 
   
   const addItem = () => {
+   
     setItems([
       ...items,
       { id: items.length + 1, description: '', quantity: 1, unitPrice: 0, subTotal: 0 }
     ]);
+    setNo(id+1);
   };
 
-  // Function to handle updating an item
+
   const handleItemChange = (index, field, value) => {
     const updatedItems = [...items];
     updatedItems[index][field] = value;
 
-    // Update subtotal for the row
+  
     updatedItems[index].subTotal = updatedItems[index].quantity * updatedItems[index].unitPrice;
     setSubTotal(updatedItems[index].subTotal);
     setTotal(calculateTotal(updatedItems));
@@ -51,14 +54,12 @@ const AddBills = () => {
 
   };
 
-  // Calculate total of all items
   const calculateTotal = (items) => {
     const totalAmount = items.reduce((acc, item) => acc + item.subTotal, 0);
-    setTotal(totalAmount); // Set the total state here
+    setTotal(totalAmount); 
     return totalAmount;
   };
 
-  // Function to handle printing the bill
   const handlePrint = async (e) => {
     
     e.preventDefault();

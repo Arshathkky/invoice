@@ -5,7 +5,7 @@ const AutoIncrementFactory = AutoIncrement(mongoose);
 
 const BillSchema = new mongoose.Schema({
     customerName: String,
-    id:{
+    no:{
         type:Number,
     }, 
     invoiceId:{
@@ -14,23 +14,23 @@ const BillSchema = new mongoose.Schema({
     }, 
     description:{
         type: String,
-        default :null
+        
     },
     quantity:{
         type:Number,
-        default :null
+        
     }, 
     unitPrice:{
         type:Number,
-        default :null
+        
     }, 
     subTotal:{
         type:Number,
-        default :null
+        
     }, 
     total:{
         type:Number,
-        default :null
+        
     }
 })
 

@@ -42,13 +42,19 @@
     border-radius: 4px;
     font-size: 1.5rem;
     cursor: pointer;
+    margin-right: 10px;
+    text-decoration: none;
   }
   
   .button:hover {
-    background-color: #0056b3;
+    background-color: #007bff;
   }
   
 .link{
     text-decoration: none;
      color: #f0f0f0;
+     
   }
+.link :hover{
+  background-color: #007bff;
+}
