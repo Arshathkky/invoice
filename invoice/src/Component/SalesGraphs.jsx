@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
- // Ensure this CSS file exists and is correctly linked
+
 
 const SalesGraph = () => {
   const [data, setData] = useState([]);
@@ -11,7 +11,7 @@ const SalesGraph = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/bill/salesData?view=${view}`);
-        console.log('Fetched data:', response.data); // Log fetched data
+        console.log('Fetched data:', response.data); 
         setData(response.data);
       } catch (error) {
         console.error('Error fetching sales data:', error);
