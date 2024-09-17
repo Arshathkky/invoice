@@ -12,7 +12,7 @@ const BillSchema = new mongoose.Schema({
         type:Number,
         unique:true
     }, 
-    description:{
+    itemName:{
         type: String,
         
     },

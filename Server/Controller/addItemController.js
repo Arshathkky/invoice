@@ -1,3 +1,4 @@
+const { request } = require('express');
 const addItems = require('../Model/addItems');
 
 
@@ -34,8 +35,29 @@ const getItems =async (req,res) =>{
     }
 }
 
+const updateItems = async(req,res) =>{
+    const soldItems = req.body.items;
+    try{
+        await Promise.all(soldItems.map(async (item)=>{
+           const result =  await addItems.updateOne(
+                {itemName: item.itemName},
+                {$inc : {quantity:-item.quantity}}
+            );
+            console.log("update success", result);
+        }));
+
+        res.status(200).json({status:"success"});
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).json({status:"fail", error: err.message});
+    }
+}
+
+
 
 module.exports={
     postItems,
-    getItems
+    getItems,
+    updateItems
 }

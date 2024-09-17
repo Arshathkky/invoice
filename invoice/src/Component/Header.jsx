@@ -7,11 +7,10 @@ const Header = ({invoiceId}) => {
     <div>
       Header
       <br/>
-      Customer name:
-      <input className='' type='text' name='customer' />
+      
       {today.toLocaleDateString()}
       <br/>
-      invoice id ={invoiceId}
+      <h5>invoice id ={invoiceId}</h5>
     </div>
   )
 }

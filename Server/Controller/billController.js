@@ -1,13 +1,15 @@
 const Bill = require('../Model/addBill');
 
 const AddBills = async (req,res) =>{
-    const {no, customerName, quantity,unitPrice,subTotal,total} = req.body;
+    const {invoiceId,no,itemName, customerName, quantity,unitPrice,subTotal,total} = req.body;
         
     try{
         const bill = new Bill(
             {
+                invoiceId:invoiceId,
                 no:no,
                 customerName:customerName,
+                itemName:itemName,
                 quantity:quantity,
                 unitPrice:unitPrice,
                 subTotal:subTotal,
@@ -18,7 +20,7 @@ const AddBills = async (req,res) =>{
         const response = bill.save();
 
         if(response){
-            res.status(200).json(response)
+            res.status(200).json({status:"success"})
         }
     }
     catch(err){

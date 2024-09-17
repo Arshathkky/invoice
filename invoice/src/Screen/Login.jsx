@@ -12,9 +12,13 @@ const Login = () => {
     e.preventDefault();
 
     try {
-        const response = await axios.post('http://localhost:3000/login/', { username, password });
-        console.log(response.data.username);
-        navigate('/dashboard');
+        const response = await axios.post('http://localhost:3000/login/login', { username,password });
+        if(response.data.status === "success"){
+          navigate('/dashboard');
+        }
+        else{
+          alert("fails")
+        }
     } catch (err) {
         console.error(err); // This will now catch and log any errors
     }

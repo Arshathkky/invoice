@@ -20,15 +20,16 @@ const AddBills = () => {
 
 
   const [customerName ,setCustomerName] =useState('')
-  const [no,setNo]= useState('1');
+  //const [no,setNo]= useState('1');
+  //const [itemName,setItemName]= useState([]);
   const [invoiceId,setInvoiceId] = useState('')
-  const [quantity, setQuantity] = useState(0);
-  const [unitPrice, setUnitPrice] = useState(0);
-  const [subTotal, setSubTotal] = useState(0);
+  //const [quantity, setQuantity] = useState([]);
+  //const [unitPrice, setUnitPrice] = useState([]);
+  //const [subTotal, setSubTotal] = useState([]);
   const [total, setTotal] = useState(0);
 
   const [items, setItems] = useState([
-    { id: 1, description: '', quantity: 1, unitPrice: 0, subTotal: 0 },
+    { no: 1, itemName: '', quantity: 1, unitPrice: 0, subTotal: 0 },
   ]);
 
   
@@ -36,9 +37,9 @@ const AddBills = () => {
    
     setItems([
       ...items,
-      { id: items.length + 1, description: '', quantity: 1, unitPrice: 0, subTotal: 0 }
+      { no: items.length + 1, itemName: '', quantity: 1, unitPrice: 0, subTotal: 0 }
     ]);
-    setNo(id+1);
+    
   };
 
 
@@ -48,7 +49,6 @@ const AddBills = () => {
 
   
     updatedItems[index].subTotal = updatedItems[index].quantity * updatedItems[index].unitPrice;
-    setSubTotal(updatedItems[index].subTotal);
     setTotal(calculateTotal(updatedItems));
     setItems(updatedItems);
 
@@ -61,16 +61,22 @@ const AddBills = () => {
   };
 
   const handlePrint = async (e) => {
-    
-    e.preventDefault();
-    
-    
+    e.preventDefault();    
     try{
-      const items = {customerName, quantity,unitPrice,subTotal,total};
-      
-      const response = await axios.post('http://localhost:3000/bill/addBill',items);
-      setInvoiceId(response.data);
-      alert("added successfully",response);
+      const billItems = {invoiceId,customerName,items,total};
+      const response = await axios.post('http://localhost:3000/bill/addBill',billItems);
+      const update = await axios.put('http://localhost:3000/items/quantity',{items});
+      if (response.data.status === "success") {
+        setInvoiceId(response.data.invoiceId);
+        alert("Added successfully");
+        alert("Updated successfully");
+        window.print();
+        setItems([{ no: 1, itemName: '', quantity: 1, unitPrice: 0, subTotal: 0 }]);
+        setCustomerName('');
+        setTotal(0);
+    } else {
+        alert("Error adding or updating items");
+    }
       
     }
     
@@ -78,13 +84,14 @@ const AddBills = () => {
       console.error(e);
       alert("error");
     }
-    window.print();
   }
 
 
   return (
     <div className='invoice'>
       <Header invoiceId={invoiceId}/>
+      Customer name:
+      <input className='' type='text' name='customer' onChange={(e)=>setCustomerName(e.target.value)}  />
       <table>
         <thead>
           <tr>
@@ -97,14 +104,14 @@ const AddBills = () => {
         </thead>
         <tbody>
           {items.map((item, index) => (
-            <tr key={item.id}>
+            <tr key={item.no}>
               
-              <td>{item.id}</td>
+              <td>{item.no}</td>
               <td>
                 <input
                   type='text'
-                  value={item.description}
-                  onChange={(e) => handleItemChange(index, 'description', e.target.value,setCustomerName(e.target.value))}
+                  value={item.itemName}
+                  onChange={(e) => handleItemChange(index, 'itemName', e.target.value)}
                   placeholder='Enter item description'
                 />
               </td>
@@ -112,7 +119,7 @@ const AddBills = () => {
                 <input
                   type='number'
                   value={item.quantity}
-                  onChange={(e) => handleItemChange(index, 'quantity', parseInt(e.target.value) ,setQuantity(e.target.value))}
+                  onChange={(e) => handleItemChange(index, 'quantity', parseInt(e.target.value))}
                   placeholder='Quantity'
                 />
               </td>
@@ -120,7 +127,7 @@ const AddBills = () => {
                 <input
                   type='number'
                   value={item.unitPrice}
-                  onChange={(e) => handleItemChange(index, 'unitPrice', parseFloat(e.target.value),setUnitPrice(e.target.value))}
+                  onChange={(e) => handleItemChange(index, 'unitPrice', parseFloat(e.target.value))}
                   placeholder='Unit Price'
                 />
               </td>

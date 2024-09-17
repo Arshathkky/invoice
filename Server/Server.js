@@ -10,7 +10,7 @@ const billRoute = require('./Routes/BillRoute')
 const app = express()
 app.use(cors({
   origin: 'http://localhost:1420',  // replace with your frontend URL
-  methods: ['GET', 'POST'],  // specify allowed methods
+  methods: ['GET', 'POST','PUT'],  // specify allowed methods
   credentials: true          // allow cookies if needed
 }));
 
