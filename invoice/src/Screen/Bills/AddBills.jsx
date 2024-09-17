@@ -5,9 +5,10 @@ import axios from 'axios';
 const AddBills = () => {
 
   useEffect(() => {
-    // Fetch the next invoice ID from the server when the component mounts
+    
     const fetchInvoiceId = async () => {
       try {
+        
         const response = await axios.get('http://localhost:3000/bill/getId');
         setInvoiceId(response.data);
       } catch (error) {
@@ -18,7 +19,7 @@ const AddBills = () => {
     fetchInvoiceId();
   }, []);
 
-
+  const [suggestion,setSuggestion] = useState([])
   const [customerName ,setCustomerName] =useState('')
   //const [no,setNo]= useState('1');
   //const [itemName,setItemName]= useState([]);
@@ -27,6 +28,7 @@ const AddBills = () => {
   //const [unitPrice, setUnitPrice] = useState([]);
   //const [subTotal, setSubTotal] = useState([]);
   const [total, setTotal] = useState(0);
+  const [date, setDate] = useState(new Date().toISOString().substring(0, 10));
 
   const [items, setItems] = useState([
     { no: 1, itemName: '', quantity: 1, unitPrice: 0, subTotal: 0 },
@@ -43,10 +45,19 @@ const AddBills = () => {
   };
 
 
-  const handleItemChange = (index, field, value) => {
+  const handleItemChange = async(index, field, value) => {
+
     const updatedItems = [...items];
     updatedItems[index][field] = value;
-
+    
+    if(field ==='itemName'){
+      try {
+        const search = await axios.get(`http://localhost:3000/items/search?q=${value}`);
+        setSuggestion(search.data); 
+      } catch (error) {
+        console.error('Error fetching item suggestions:', error);
+      }
+    }
   
     updatedItems[index].subTotal = updatedItems[index].quantity * updatedItems[index].unitPrice;
     setTotal(calculateTotal(updatedItems));
@@ -63,7 +74,7 @@ const AddBills = () => {
   const handlePrint = async (e) => {
     e.preventDefault();    
     try{
-      const billItems = {invoiceId,customerName,items,total};
+      const billItems = {invoiceId,customerName,items,total,date};
       const response = await axios.post('http://localhost:3000/bill/addBill',billItems);
       const update = await axios.put('http://localhost:3000/items/quantity',{items});
       if (response.data.status === "success") {
@@ -74,6 +85,7 @@ const AddBills = () => {
         setItems([{ no: 1, itemName: '', quantity: 1, unitPrice: 0, subTotal: 0 }]);
         setCustomerName('');
         setTotal(0);
+        setDate(new Date().toISOString().substring(0, 10));
     } else {
         alert("Error adding or updating items");
     }
@@ -90,8 +102,14 @@ const AddBills = () => {
   return (
     <div className='invoice'>
       <Header invoiceId={invoiceId}/>
-      Customer name:
+     <div>
+        Customer name:
       <input className='' type='text' name='customer' onChange={(e)=>setCustomerName(e.target.value)}  />
+      </div> 
+      <div>
+        Date:
+        <input type='date' value={date} onChange={(e) => setDate(e.target.value)} />
+      </div>
       <table>
         <thead>
           <tr>
@@ -113,7 +131,14 @@ const AddBills = () => {
                   value={item.itemName}
                   onChange={(e) => handleItemChange(index, 'itemName', e.target.value)}
                   placeholder='Enter item description'
+                  list={`suggestions-${index}`}
                 />
+                <datalist id={`suggestions-${index}`}>
+                  {suggestion.map((suggestionItem, i) => (
+                    <option key={i} value={suggestionItem.itemName} />
+                  ))}
+                </datalist>
+               
               </td>
               <td>
                 <input

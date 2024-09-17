@@ -54,10 +54,25 @@ const updateItems = async(req,res) =>{
     }
 }
 
+const searchItems = async (req,res) =>{
+    const searchTerm = req.query.q;
+    try{
+        const items = await addItems.find({
+            itemName: {$regex: searchTerm , $options : 'i'}
+        })
+        res.status(200).json(items);
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).json({ error: 'Failed to search items' });
+    }
+}
+
 
 
 module.exports={
     postItems,
     getItems,
-    updateItems
+    updateItems,
+    searchItems
 }

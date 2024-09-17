@@ -1,41 +1,35 @@
-const  mongoose =require('mongoose');
-const AutoIncrement =require( 'mongoose-sequence');
-
-const AutoIncrementFactory = AutoIncrement(mongoose);
+const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const BillSchema = new mongoose.Schema({
-    customerName: String,
-    no:{
-        type:Number,
-    }, 
-    invoiceId:{
-        type:Number,
-        unique:true
-    }, 
-    itemName:{
+    customerName: {
         type: String,
-        
+        required: true
     },
-    quantity:{
-        type:Number,
-        
-    }, 
-    unitPrice:{
-        type:Number,
-        
-    }, 
-    subTotal:{
-        type:Number,
-        
-    }, 
-    total:{
-        type:Number,
-        
+    invoiceId: {
+        type: Number,
+        unique: true,
+       
+    },
+    items: [{
+        itemName: String,
+        quantity: Number,
+        unitPrice: Number,
+        subTotal: Number
+    }],
+    total: {
+        type: Number,
+        required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
-})
+});
 
+// Add auto-increment plugin for the invoiceId field
+BillSchema.plugin(AutoIncrement, { id: 'invoice_id_counter', inc_field: 'invoiceId' });
 
-BillSchema.plugin(AutoIncrementFactory, { id: 'invoice_id_counter', inc_field: 'invoiceId' });
-const Bill = mongoose.model('Bill',BillSchema);
+const Bill = mongoose.model('Bill', BillSchema);
 
-module.exports= Bill;
+module.exports = Bill;

@@ -1,0 +1,16 @@
+.sales-graph-container {
+    margin: 20px;
+  }
+  
+  .sales-graph-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+ 
+  
+  .sales-graph-chart {
+    margin-top: 20px;
+  }
+  
