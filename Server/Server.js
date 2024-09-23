@@ -9,15 +9,15 @@ const billRoute = require('./Routes/BillRoute')
 
 const app = express()
 app.use(cors({
-  origin: 'http://localhost:1420',  // replace with your frontend URL
-  methods: ['GET', 'POST','PUT'],  // specify allowed methods
-  credentials: true          // allow cookies if needed
+  origin: ['http://localhost:1420', 'tauri://localhost'],
+  methods: ['GET', 'POST','PUT'],  
+  credentials: true         
 }));
 
 
 
 const server = http.createServer(app);
-const port = 3000
+const port = 1420
 
 app.use(express.json());
 

@@ -10,7 +10,7 @@ const ViewBills = () => {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const fetchItems = await axios.get('http://localhost:3000/bill/getBill');
+        const fetchItems = await axios.get('http://localhost:3000/api/');
         setBills(fetchItems.data);
       } catch (err) {
         console.error(err);

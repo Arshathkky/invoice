@@ -16,6 +16,7 @@ const postItems = async (req,res) => {
             const additems = await newItem.save();
             if(additems){
                 res.status(200).json(additems);
+                console.log(additems)
             }
     }
     catch(err){

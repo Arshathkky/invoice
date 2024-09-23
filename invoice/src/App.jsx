@@ -1,6 +1,3 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/tauri";
 import './Style/style.css'
 import './App.css'
 import HomeScreen from "./Screen/HomeScreen";
@@ -9,6 +6,20 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+
+// import { invoke } from '@tauri-apps/api';  
+
+// async function startBackend() {
+//   try {
+//     await invoke('start_backend');  
+//     console.log('Backend started successfully');
+//   } catch (error) {
+//     console.error('Failed to start backend:', error);
+//   }
+// }
+
+
+// startBackend();
 
 import Login from "./Screen/Login";
 import Dashboard from "./Screen/Dashboard";
