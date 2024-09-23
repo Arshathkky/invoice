@@ -9,7 +9,7 @@ const AddBills = () => {
     const fetchInvoiceId = async () => {
       try {
         
-        const response = await axios.get('http://localhost:3000/api/bill/getId');
+        const response = await axios.get('http://localhost:3000/bill/getId');
         setInvoiceId(response.data);
       } catch (error) {
         console.error('Error fetching invoice ID:', error);
@@ -52,7 +52,7 @@ const AddBills = () => {
     
     if(field ==='itemName'){
       try {
-        const search = await axios.get(`http://localhost:3000/api/items/search?q=${value}`);
+        const search = await axios.get(`http://localhost:3000/items/search?q=${value}`);
         setSuggestion(search.data); 
       } catch (error) {
         console.error('Error fetching item suggestions:', error);
@@ -75,11 +75,12 @@ const AddBills = () => {
     e.preventDefault();    
     try{
       const billItems = {invoiceId,customerName,items,total,date};
-      const response = await axios.post('http://localhost:3000/api/bill/addBill',billItems);
-      const update = await axios.put('http://localhost:3000/api/items/quantity',{items});
+      const response = await axios.post('http://localhost:3000/bill/addBill',billItems);
+      const update = await axios.put('http://localhost:3000/items/quantity',{items});
       if (response.data.status === "success") {
         setInvoiceId(response.data.invoiceId);
-        
+        alert("Added successfully");
+        alert("Updated successfully");
         window.print();
         setItems([{ no: 1, itemName: '', quantity: 1, unitPrice: 0, subTotal: 0 }]);
         setCustomerName('');

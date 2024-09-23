@@ -29,7 +29,6 @@ const getItems =async (req,res) =>{
     try {
         const items = await addItems.find();
         res.status(200).json(items);
-        console.log(items);
         }
     catch(err){
         console.error(err)
@@ -44,7 +43,7 @@ const updateItems = async(req,res) =>{
                 {itemName: item.itemName},
                 {$inc : {quantity:-item.quantity}}
             );
-            
+            console.log("update success", result);
         }));
 
         res.status(200).json({status:"success"});

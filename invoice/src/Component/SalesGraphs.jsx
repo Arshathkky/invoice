@@ -10,7 +10,7 @@ const SalesGraph = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/bill/salesData?view=${view}`);
+        const response = await axios.get(`http://localhost:3000/bill/salesData?view=${view}`);
         console.log('Fetched data:', response.data); 
         setData(response.data);
       } catch (error) {
