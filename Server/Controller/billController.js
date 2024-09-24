@@ -59,33 +59,34 @@ const getSalesData = async (req, res) => {
       startOfDay.setHours(0, 0, 0, 0);
   
       const startOfWeek = new Date();
-      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); 
+      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); // Set to the start of the week
+  
       const startOfMonth = new Date();
-      startOfMonth.setDate(1); 
+      startOfMonth.setDate(1); // Set to the start of the month
   
       if (view === 'day') {
         data = await Bill.aggregate([
           { $match: { date: { $gte: startOfDay } } },
           { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$date' } }, total: { $sum: '$total' } } },
-          { $sort: { _id: 1 } } 
+          { $sort: { _id: 1 } } // Sort by date
         ]);
       } else if (view === 'week') {
         data = await Bill.aggregate([
           { $match: { date: { $gte: startOfWeek } } },
           { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$date' } }, total: { $sum: '$total' } } },
-          { $sort: { _id: 1 } } 
+          { $sort: { _id: 1 } } // Sort by date
         ]);
       } else if (view === 'month') {
         data = await Bill.aggregate([
           { $match: { date: { $gte: startOfMonth } } },
           { $group: { _id: { $dateToString: { format: '%Y-%m', date: '$date' } }, total: { $sum: '$total' } } },
-          { $sort: { _id: 1 } } 
+          { $sort: { _id: 1 } } // Sort by month
         ]);
       }
   
-      
+      // Convert MongoDB object IDs to ISO strings
       const formattedData = data.map(item => ({
-        date: item._id,
+        date: item._id, // Already formatted as 'YYYY-MM-DD' or 'YYYY-MM'
         total: item.total
       }));
   
