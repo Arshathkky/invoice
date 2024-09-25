@@ -5,8 +5,8 @@
 
 .right {
     display: flex;
-    flex-wrap: wrap; /* Allow items to wrap to the next line */
-    justify-content: space-around; /* Distribute space around items */
-    gap: 20px; /* Space between items */
-    align-items: center;
+    flex-wrap: wrap; 
+    justify-content: space-around;
+    
+    width: 100%;
 }

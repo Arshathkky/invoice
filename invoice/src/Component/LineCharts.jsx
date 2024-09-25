@@ -7,15 +7,15 @@ import axios from 'axios';
 Chart.register(...registerables, annotationPlugin);
 
 const LineCharts = () => {
-  const [data, setData] = useState([]);  // Moved above
-  const [threshold, setThreshold] = useState(0); // Initialized to 0 by default
+  const [data, setData] = useState([]); 
+  const [threshold, setThreshold] = useState(0); 
   
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const response = await axios.get('http://localhost:3000/items/view');
         setData(response.data);
-        setThreshold(Math.max(...response.data.map(item => item.quantity))); // Set threshold after data is fetched
+        setThreshold(Math.max(...response.data.map(item => item.quantity)));
       } catch (err) {
         console.error(err.message);
       }
@@ -24,7 +24,7 @@ const LineCharts = () => {
     fetchItems();
   }, []);
 
-  // Ensure `data` is available before calculating `maxValue`
+
   const maxValue = data.length ? Math.max(...data.map(item => item.quantity)) : 0;
   const filteredData = data.filter(item => item.quantity <= threshold);
 
@@ -41,11 +41,14 @@ const LineCharts = () => {
         pointBorderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 2,
         tension: 0.3,
+        
       },
     ],
   };
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: false,
     scales: {
       y: {
         beginAtZero: true,
@@ -84,8 +87,9 @@ const LineCharts = () => {
         style={{ width: '100%' ,cursor:'grab'}}
       />
       <p>Selected Quantity value: {threshold}</p>
-
-      <Line data={chartData} options={options} />
+      <div style={{ width: '600px', height: '300px' }}>
+        <Line data={chartData} options={options} />
+      </div>
     </div>
   );
 };
