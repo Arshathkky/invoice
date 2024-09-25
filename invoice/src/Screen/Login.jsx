@@ -12,7 +12,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-        const response = await axios.post('http://localhost:3000/api/login/login', { username,password });
+        const response = await axios.post('http://localhost:3000/login/login', { username,password });
         if(response.data.status === "success"){
           navigate('/dashboard');
         }

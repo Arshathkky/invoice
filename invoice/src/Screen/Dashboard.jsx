@@ -3,22 +3,24 @@ import Navbar from '../Component/Navbar'
 import SalesGraph from '../Component/SalesGraphs'
 
 import Top from '../Component/Top'
+import LineCharts from '../Component/LineCharts'
 
 const Dashboard = () => {
   return (
-    <div>
+   
       
       <div className='dashboard_container'>
         <div >
               <Navbar/>
         </div>
 
-        <div>
+        <div className='right'>
               <SalesGraph/>
+              <LineCharts/>
         </div>
         
       </div>
-    </div>
+   
   )
 }
 

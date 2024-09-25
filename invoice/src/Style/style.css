@@ -9,3 +9,12 @@
 @import './Top.css';
 
 
+:root{
+    --color: white;
+    --background-color:rgba(239, 229, 216, 0.953);
+    --button-color :blueviolet;
+}
+
+/* use var(--background-color)  */
+
+

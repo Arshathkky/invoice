@@ -68,11 +68,32 @@ const searchItems = async (req,res) =>{
     }
 }
 
+const lowItems = async (req,res) =>{
+    try{
+        const response = await addItems.find()
+        .sort({quantity :1})
+        .limit(10)
+        .select('itemName quantity')
+
+        if(response.length>0){
+            console.log("top 10 items",response)
+            res.status(200).json(response)
+        }
+        else {
+            onsole.log('No products found.');
+        }
+    }
+    catch (err){
+        console.error('Error retrieving top 5 minimum prices:', err);
+    }
+}
+
 
 
 module.exports={
     postItems,
     getItems,
     updateItems,
-    searchItems
+    searchItems,
+    lowItems
 }

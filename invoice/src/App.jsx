@@ -8,12 +8,15 @@ import './App.css'
 import Userlayout from './Layout/Userlayout'
 import Top from './Component/Top';
 
+import LineCharts from "./Component/LineCharts";
+
 function App() {
   
   return (
     <div>
 
-      <Top/>
+      
+      {<Top/>}
       <Userlayout/>
    
     </div>

@@ -3,14 +3,27 @@ import React, { useEffect, useState } from 'react';
 
 
 const ViewBills = () => {
-  const [search, setSearch] = useState('');
+  const [search,setSearch] = useState('')
   const [bills, setBills] = useState([]);
   const [visibleCount, setVisibleCount] = useState(10);
+
+  const searchByName =(search)=>{
+    
+
+  }
+
+  const searchByDate = (search) =>{
+
+  }
+
+  const searchById = (search)=>{
+
+  }
 
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const fetchItems = await axios.get('http://localhost:3000/api/bill/getBill');
+        const fetchItems = await axios.get('http://localhost:3000/bill/getBill');
         setBills(fetchItems.data);
       } catch (err) {
         console.error(err);
@@ -27,13 +40,13 @@ const ViewBills = () => {
   return (
     <div className='invoice'>
       <div className='search-controls'>
-        <button className='button'>By Name</button>
-        <button className='button'>By Date</button>
-        <button className='button'>By Invoice</button>
-        <br />
         <label>Search here</label>
         <input type='text' onChange={(e) => { setSearch(e.target.value) }} />
-        <button className='button'>Search</button>
+        <button className='button' onClick={()=>searchByName(search)}>By Name</button>
+        <button className='button' onClick={()=>searchByDate(search)}>By Date</button>
+        <button className='button' onClick={()=>searchById(search)}>By Invoice</button>
+        <br />
+        
       </div>
       <table className='main-table'>
         <thead>
