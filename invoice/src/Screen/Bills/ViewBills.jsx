@@ -7,17 +7,15 @@ const ViewBills = () => {
   const [bills, setBills] = useState([]);
   const [visibleCount, setVisibleCount] = useState(10);
 
-  const searchByName =(search)=>{
-    
-
-  }
-
-  const searchByDate = (search) =>{
-
-  }
-
-  const searchById = (search)=>{
-
+  
+  const searchById = async()=>{
+    const invoiceId =search
+    try {
+      const fetchItems = await axios.post('http://localhost:3000/bill/getById',{invoiceId});
+      setBills(fetchItems.data);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   useEffect(() => {
@@ -41,10 +39,8 @@ const ViewBills = () => {
     <div className='invoice'>
       <div className='search-controls'>
         <label>Search here</label>
-        <input type='text' onChange={(e) => { setSearch(e.target.value) }} />
-        <button className='button' onClick={()=>searchByName(search)}>By Name</button>
-        <button className='button' onClick={()=>searchByDate(search)}>By Date</button>
-        <button className='button' onClick={()=>searchById(search)}>By Invoice</button>
+        <input type='text' onChange={(e) => { setSearch(e.target.value) }} value={search} />
+        <button className='button' onClick={()=>searchById( )}>By Invoice</button>
         <br />
         
       </div>

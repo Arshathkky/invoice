@@ -25,7 +25,10 @@ const Navbar = () => {
         <Link className='link' to={'/account'}>Account</Link>
       </button>
       <button className='button'>
-        <Link className='link' to={'/'}>Sign out</Link>
+        <Link className='link' to={''}>Analysis</Link>
+      </button>
+      <button className='button'>
+        <Link className='link' to={''}>Setting</Link>
       </button>
     </div>
   );

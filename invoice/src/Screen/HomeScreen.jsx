@@ -6,7 +6,7 @@ const HomeScreen = () => {
   const navigate = useNavigate()
   const clicktext =()=>{
     console.log("login success")
-    navigate("\dashboard")
+    navigate("\login")
   }
   return (
     <div className='container'>

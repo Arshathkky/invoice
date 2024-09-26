@@ -62,31 +62,31 @@ const getSalesData = async (req, res) => {
       startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); // Set to the start of the week
   
       const startOfMonth = new Date();
-      startOfMonth.setDate(1); // Set to the start of the month
+      startOfMonth.setDate(1); 
   
       if (view === 'day') {
         data = await Bill.aggregate([
           { $match: { date: { $gte: startOfDay } } },
           { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$date' } }, total: { $sum: '$total' } } },
-          { $sort: { _id: 1 } } // Sort by date
+          { $sort: { _id: 1 } }
         ]);
       } else if (view === 'week') {
         data = await Bill.aggregate([
           { $match: { date: { $gte: startOfWeek } } },
           { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$date' } }, total: { $sum: '$total' } } },
-          { $sort: { _id: 1 } } // Sort by date
+          { $sort: { _id: 1 } } 
         ]);
       } else if (view === 'month') {
         data = await Bill.aggregate([
           { $match: { date: { $gte: startOfMonth } } },
           { $group: { _id: { $dateToString: { format: '%Y-%m', date: '$date' } }, total: { $sum: '$total' } } },
-          { $sort: { _id: 1 } } // Sort by month
+          { $sort: { _id: 1 } }
         ]);
       }
   
-      // Convert MongoDB object IDs to ISO strings
+     
       const formattedData = data.map(item => ({
-        date: item._id, // Already formatted as 'YYYY-MM-DD' or 'YYYY-MM'
+        date: item._id, 
         total: item.total
       }));
   
@@ -96,11 +96,36 @@ const getSalesData = async (req, res) => {
       res.status(500).send('Server Error');
     }
   };
+
+  
+
+const getById = async (req,res) =>{
+  const { invoiceId}  = req.body;
+  console.log(invoiceId);
+  try{
+    const bill = await Bill.find({invoiceId : invoiceId})
+    if(!bill){
+      return  res.status(404).json({message:"No bill found"})
+    }
+    res.json(bill)
+
+  }
+  catch(err){
+    console.error('Error finding product by name:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+
+
+
   
 
 module.exports = {
     AddBills,
     getInvoiceId,
     getBill,
-    getSalesData
+    getSalesData,
+    getById
+   
 };

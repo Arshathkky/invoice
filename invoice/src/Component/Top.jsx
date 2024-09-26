@@ -19,6 +19,7 @@ const Top = () => {
       <div className='top-container'>
       <button className='button' onClick={callback}> Back</button>
       <button className='button'><Link className='link' to="/dashboard">Home</Link></button>
+      <button className='button'><Link className='link' to="/">Sign Out</Link></button>
       
       
     </div>
