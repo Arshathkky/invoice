@@ -101,7 +101,7 @@ const getSalesData = async (req, res) => {
 
 const getById = async (req,res) =>{
   const { invoiceId}  = req.body;
-  console.log(invoiceId);
+
   try{
     const bill = await Bill.find({invoiceId : invoiceId})
     if(!bill){

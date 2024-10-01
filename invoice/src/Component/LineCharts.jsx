@@ -8,23 +8,28 @@ Chart.register(...registerables, annotationPlugin);
 
 const LineCharts = () => {
   const [data, setData] = useState([]); 
+  const [defaults,setDefaults] =useState('');
   const [threshold, setThreshold] = useState(0); 
   
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const response = await axios.get('http://localhost:3000/items/view');
-        setData(response.data);
+        const lowQuantity = await axios.get('http://localhost:3000/items/lowItems')
+        setDefaults(lowQuantity.data)
+        setData(lowQuantity.data);
+        setCategory(data.category)
         setThreshold(Math.max(...response.data.map(item => item.quantity)));
       } catch (err) {
         console.error(err.message);
       }
     };
-
+    
     fetchItems();
   }, []);
-
-
+  
+  
+  const [category,setCategory] = useState(defaults)
   const maxValue = data.length ? Math.max(...data.map(item => item.quantity)) : 0;
   const filteredData = data.filter(item => item.quantity <= threshold);
 

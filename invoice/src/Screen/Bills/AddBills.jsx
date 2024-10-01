@@ -31,7 +31,7 @@ const AddBills = () => {
   const [date, setDate] = useState(new Date().toISOString().substring(0, 10));
 
   const [items, setItems] = useState([
-    { no: 1, itemName: '', quantity: 1, unitPrice: 0, subTotal: 0 },
+    { no: 1, itemName: '', quantity: 1, unitPrice: 0,discount:0, subTotal: 0 },
   ]);
 
   
@@ -39,7 +39,7 @@ const AddBills = () => {
    
     setItems([
       ...items,
-      { no: items.length + 1, itemName: '', quantity: 1, unitPrice: 0, subTotal: 0 }
+      { no: items.length + 1, itemName: '', quantity: 1, unitPrice: 0,discount:0, subTotal: 0 }
     ]);
     
   };
@@ -59,7 +59,7 @@ const AddBills = () => {
       }
     }
   
-    updatedItems[index].subTotal = updatedItems[index].quantity * updatedItems[index].unitPrice;
+    updatedItems[index].subTotal = updatedItems[index].quantity * updatedItems[index].unitPrice-updatedItems[index].discount;
     setTotal(calculateTotal(updatedItems));
     setItems(updatedItems);
 
@@ -114,9 +114,10 @@ const AddBills = () => {
         <thead>
           <tr>
             <th>No</th>
-            <th>Description</th>
+            <th>Item Name</th>
             <th>Quantity</th>
             <th>Unit Price</th>
+            <th>Discount</th>
             <th>Sub Total</th>
           </tr>
         </thead>
@@ -156,11 +157,23 @@ const AddBills = () => {
                   placeholder='Unit Price'
                 />
               </td>
+              <td>
+                <input
+                  type='number'
+                  value={item.unitPrice}
+                  onChange={(e) => handleItemChange(index, 'unitPrice', parseFloat(e.target.value))}
+                  placeholder='Unit Price'
+                />
+              </td>
               <td>{item.subTotal.toFixed(2)}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      <button type='button' onClick={addItem} id='nonPrintArea' className='button'>
+        Add Item
+      </button>
+
 
       <div className='total'>
         <strong>
@@ -168,10 +181,9 @@ const AddBills = () => {
            
         </strong>
       </div>
-
-      <button type='button' onClick={addItem} id='nonPrintArea' className='button'>
-        Add Item
-      </button>
+      <div className=''>
+          
+      </div>
 
       <div className='greed'>
         Thank you<br />

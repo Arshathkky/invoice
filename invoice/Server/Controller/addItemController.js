@@ -3,13 +3,14 @@ const addItems = require('../Model/addItems');
 
 
 const postItems = async (req,res) => {
-    const {itemName,unitPrice,quantity,Distributor,orderDate} = req.body;
+    const {itemName,unitPrice,quantity,category,Distributor,orderDate} = req.body;
 
     try{
         const newItem = new addItems({
             itemName,
             unitPrice,
             quantity,
+            category,
             Distributor,
             orderDate,
           });
@@ -69,10 +70,11 @@ const searchItems = async (req,res) =>{
 }
 
 const lowItems = async (req,res) =>{
+    //const limit= req.body;
     try{
         const response = await addItems.find()
         .sort({quantity :1})
-        .limit(10)
+        .limit(25)
         .select('itemName quantity')
 
         if(response.length>0){
@@ -80,11 +82,11 @@ const lowItems = async (req,res) =>{
             res.status(200).json(response)
         }
         else {
-            onsole.log('No products found.');
+            console.log('No products found.');
         }
     }
     catch (err){
-        console.error('Error retrieving top 5 minimum prices:', err);
+        console.error('Error retrieving top 5 minimum quantity:', err);
     }
 }
 

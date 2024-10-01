@@ -5,6 +5,7 @@ const AddItemSchema = new mongoose.Schema({
     itemName:String,
     unitPrice:Number,
     quantity:Number,
+    category:String,
     Distributor:String,
     orderDate:Date
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import PrintComponent from '../PrintScreen'
+
 import axios from 'axios'
+import { getAllProduct } from '../../API/inventoryAPI';
 
 const ViewItems = () => {
 
@@ -9,8 +10,8 @@ const ViewItems = () => {
   useEffect(()=>{
       const fetchItems = async ()=>{
         try{
-            const response = await axios.get('http://localhost:3000/items/view')
-            setItems(response.data);
+            const response = await getAllProduct();
+            setItems(response);
 
         }
         catch(err){
@@ -48,7 +49,7 @@ const ViewItems = () => {
         ): (<>no items found</>)}
         
       </table>
-      <PrintComponent/>
+     
     </div>
   )
 }
