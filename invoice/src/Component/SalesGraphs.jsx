@@ -1,4 +1,7 @@
+const {withNativeWind} = require('nativewind/metro');
 import React, { useEffect, useState } from 'react';
+import "'./global.css'";
+import { GluestackUIProvider } from "@/'components/ui'/gluestack-ui-provider";
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 

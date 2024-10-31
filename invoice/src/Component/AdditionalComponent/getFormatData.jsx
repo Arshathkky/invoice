@@ -1,3 +1,4 @@
+ const {withNativeWind} = require('nativewind/metro');
  const getFormatDate  =  ()=>{
     const today = new Date();
     const year = today.getFullYear();
@@ -10,4 +11,4 @@
 
 }
 
-export default getFormatDate;
+ export default getFormatDate;

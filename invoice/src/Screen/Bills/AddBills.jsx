@@ -1,4 +1,7 @@
+const {withNativeWind} = require('nativewind/metro');
 import React, { useEffect, useState } from 'react';
+import "'./global.css'";
+import { GluestackUIProvider } from "@/'components/ui'/gluestack-ui-provider";
 import Header from '../../Component/Header';
 import axios from 'axios';
 
@@ -102,10 +105,10 @@ const AddBills = () => {
   return (
     <div className='invoice'>
       <Header invoiceId={invoiceId}/>
-     <div>
-        Customer name:
-      <input className='' type='text' name='customer' onChange={(e)=>setCustomerName(e.target.value)}  />
-      </div> 
+      <div>
+         Customer name:
+       <input className='' type='text' name='customer' onChange={(e)=>setCustomerName(e.target.value)}  />
+       </div>
       <div>
         Date:
         <input type='date' value={date} onChange={(e) => setDate(e.target.value)} />
@@ -173,8 +176,6 @@ const AddBills = () => {
       <button type='button' onClick={addItem} id='nonPrintArea' className='button'>
         Add Item
       </button>
-
-
       <div className='total'>
         <strong>
             Total: {total.toFixed(2)}
@@ -184,12 +185,10 @@ const AddBills = () => {
       <div className=''>
           
       </div>
-
       <div className='greed'>
         Thank you<br />
         Come again
       </div>
-
       <button className='button' id='nonPrintArea' onClick={handlePrint}>
         Print
       </button>

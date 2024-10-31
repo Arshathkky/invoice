@@ -1,4 +1,7 @@
+const {withNativeWind} = require('nativewind/metro');
 import axios from 'axios';
+import "'./global.css'";
+import { GluestackUIProvider } from "@/'components/ui'/gluestack-ui-provider";
 import React, { useEffect, useState } from 'react';
 
 

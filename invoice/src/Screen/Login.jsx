@@ -1,4 +1,7 @@
+const {withNativeWind} = require('nativewind/metro');
 import React, {  useState } from 'react';
+import "'./global.css'";
+import { GluestackUIProvider } from "@/'components/ui'/gluestack-ui-provider";
 import {  useNavigate} from 'react-router-dom';
 import axios from 'axios'
 

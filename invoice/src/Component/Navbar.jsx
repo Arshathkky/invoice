@@ -1,4 +1,7 @@
+const {withNativeWind} = require('nativewind/metro');
 import React from 'react';
+import "'./global.css'";
+import { GluestackUIProvider } from "@/'components/ui'/gluestack-ui-provider";
 import Dropdown from './Dropdown';
 import { Link } from 'react-router-dom';
 

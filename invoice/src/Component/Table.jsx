@@ -1,7 +1,11 @@
+const {withNativeWind} = require('nativewind/metro');
 import React from "react";
 
+import "'./global.css'";
+import { GluestackUIProvider } from "@/'components/ui'/gluestack-ui-provider";
+
 const CustomizeTable = ({columns,data})=>{
-    return(
+    return (
         <table>
             <thead>
                 <tr>
@@ -11,12 +15,17 @@ const CustomizeTable = ({columns,data})=>{
                 </tr>
             </thead>
             <tbody>
-                {data.map((data,index)=>(
-                    <td key={index}>{data}</td>
+                {data.map((row,rowindex)=>(
+                    <tr key={index}>
+                    
+                    {columns.map((col,colIndex) =>(
+                        <td key={colIndex}>{row[col]}</td>
+                    ))}
+                    </tr>
                 ))}
             </tbody>
         </table>
-    )
+    );
 }
 
 export default CustomizeTable;

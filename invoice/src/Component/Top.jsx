@@ -1,4 +1,7 @@
+const {withNativeWind} = require('nativewind/metro');
 import React from 'react'
+import "'./global.css'";
+import { GluestackUIProvider } from "@/'components/ui'/gluestack-ui-provider";
 import { Link } from 'react-router-dom'
 import { useNavigate,useLocation } from 'react-router-dom'
 import Dashboard from '../Screen/Dashboard';
@@ -17,13 +20,11 @@ const Top = () => {
     
     return (
       <div className='top-container'>
-      <button className='button' onClick={callback}> Back</button>
-      <button className='button'><Link className='link' to="/dashboard">Home</Link></button>
-      <button className='button'><Link className='link' to="/">Sign Out</Link></button>
-      
-      
-    </div>
-  )
+        <button className='button' onClick={callback}> Back</button>
+        <button className='button'><Link className='link' to="/dashboard">Home</Link></button>
+        <button className='button'><Link className='link' to="/">Sign Out</Link></button>
+      </div>
+    );
 }
 }
 

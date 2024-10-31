@@ -1,4 +1,7 @@
+const {withNativeWind} = require('nativewind/metro');
 import { useState } from "react";
+import "'./global.css'";
+import { GluestackUIProvider } from "@/'components/ui'/gluestack-ui-provider";
 import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/tauri";
 import './Style/style.css'
@@ -13,13 +16,9 @@ import LineCharts from "./Component/LineCharts";
 function App() {
   
   return (
-    <div>
-
-      
-      {<Top/>}
-      <Userlayout/>
-   
-    </div>
+    <GluestackUIProvider mode="light"><div className="app">
+        <Userlayout/>
+      </div></GluestackUIProvider>
   );
 }
 
