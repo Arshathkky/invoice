@@ -1,3 +1,4 @@
+const {withNativeWind} = require('nativewind/metro');
 const express= require('express');
 const router = express.Router();
 

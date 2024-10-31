@@ -1,18 +1,16 @@
+const {withNativeWind} = require('nativewind/metro');
 const { request } = require('express');
 const addItems = require('../Model/addItems');
 
 
 const postItems = async (req,res) => {
-    const {itemName,unitPrice,quantity,category,Distributor,orderDate} = req.body;
+    const {items} = req.body;
+    console.log(items)
 
     try{
         const newItem = new addItems({
-            itemName,
-            unitPrice,
-            quantity,
-            category,
-            Distributor,
-            orderDate,
+            items:items,
+            
           });
             const additems = await newItem.save();
             if(additems){
@@ -41,8 +39,8 @@ const updateItems = async(req,res) =>{
     try{
         await Promise.all(soldItems.map(async (item)=>{
            const result =  await addItems.updateOne(
-                {itemName: item.itemName},
-                {$inc : {quantity:-item.quantity}}
+                {"items.itemName": item.itemName},
+                {$inc : {"items.$.quantity":-item.quantity}}
             );
             console.log("update success", result);
         }));
@@ -59,7 +57,7 @@ const searchItems = async (req,res) =>{
     const searchTerm = req.query.q;
     try{
         const items = await addItems.find({
-            itemName: {$regex: searchTerm , $options : 'i'}
+            "items.itemName": {$regex: searchTerm , $options : 'i'}
         })
         res.status(200).json(items);
     }
@@ -70,12 +68,19 @@ const searchItems = async (req,res) =>{
 }
 
 const lowItems = async (req,res) =>{
-    //const limit= req.body;
+
+    const category = req.query.category || ''
+    
     try{
-        const response = await addItems.find()
-        .sort({quantity :1})
-        .limit(25)
-        .select('itemName quantity')
+        const matchStage = category ? { $match: {"items.category" : category}} : {$match:{}}
+        const response = await addItems.aggregate([
+            {$unwind:"$items"},
+            matchStage,
+            {$sort:{"items.quantity":1}},
+            {$limit:25},
+            {$project:{"items.itemName":1,"items.quantity":1,"items.Distributor":1,"items.category":1}}
+        ])
+        
 
         if(response.length>0){
             console.log("top 10 items",response)
@@ -86,7 +91,7 @@ const lowItems = async (req,res) =>{
         }
     }
     catch (err){
-        console.error('Error retrieving top 5 minimum quantity:', err);
+        console.error('Error retrieving top 25 minimum quantity:', err);
     }
 }
 
@@ -97,5 +102,6 @@ module.exports={
     getItems,
     updateItems,
     searchItems,
-    lowItems
+    lowItems,
+    darkMode: "media"
 }

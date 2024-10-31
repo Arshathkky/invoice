@@ -1,3 +1,4 @@
+const {withNativeWind} = require('nativewind/metro');
 const User = require('../Model/UserModel')
 
 const getUser = async (req, res) => {
@@ -17,7 +18,10 @@ const getUser = async (req, res) => {
       res.status(500).json({ message: err.message });
     }
   };
-     
 
 
-module.exports={getUser}
+
+module.exports={
+  getUser,
+  darkMode: "media"
+}
