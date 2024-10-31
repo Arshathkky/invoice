@@ -1,3 +1,4 @@
+const {withNativeWind} = require('nativewind/metro');
 const mongoose = require('mongoose');
 
 const accountSchema = new mongoose.Schema({

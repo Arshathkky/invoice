@@ -1,3 +1,4 @@
+const {withNativeWind} = require('nativewind/metro');
 const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
